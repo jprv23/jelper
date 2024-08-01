@@ -1,0 +1,19 @@
+{
+    "name": "jeanp/jelper",
+    "description": "library helpers php laravel",
+    "type": "library",
+    "require": {
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Jeanp\\Jelper\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Jean Pier",
+            "email": "jeanpier.23.26@gmail.com"
+        }
+    ]
+}
