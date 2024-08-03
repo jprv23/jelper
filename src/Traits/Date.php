@@ -7,7 +7,7 @@ use DateTime;
 trait Date
 {
 
-    public function sheet_date_to_php($excel_date, $format = 'Y-m-d')
+    public function parseDateFromNumber($excel_date, $format = 'Y-m-d')
     {
         if (!$excel_date) {
             return null;
@@ -58,5 +58,23 @@ trait Date
             '11' => 'Noviembre',
             '12' => 'Diciembre',
         ];
+    }
+
+    function getShortMonths($month)
+    {
+        return match ((int) $month) {
+            1 => 'Ene',
+            2 => 'Feb',
+            3 => 'Mar',
+            4 => 'Abr',
+            5 => 'May',
+            6 => 'Jun',
+            7 => 'Jul',
+            8 => 'Ago',
+            9 => 'Sep',
+            10 => 'Oct',
+            11 => 'Nov',
+            12 => 'Dic',
+        };
     }
 }
