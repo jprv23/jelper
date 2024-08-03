@@ -12,15 +12,8 @@ trait File
         return number_format($size / 1048576, 2);
     }
 
-    public function saveFile($input, $directory, $disk = 'public', $filename = null)
+    public function saveFile($file, $directory, $disk = 'public', $filename = null)
     {
-
-        if (is_string($input)) {
-            $file = request()->file($input);
-        } else {
-            $file = $input;
-        }
-
         if (!$file) {
             return null;
         }
