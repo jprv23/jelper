@@ -8,6 +8,10 @@ use Exception;
 trait Str
 {
 
+    /**
+     * Función para generar una cadena de texto aleatoria
+     * @param length => Longitud de la cadena
+     */
     public function rstring($length = 10)
     {
         $characters       = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
