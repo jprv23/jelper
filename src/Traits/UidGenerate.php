@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits;
+namespace Jeanp\Jelper\Traits;
 
 use Illuminate\Support\Facades\DB;
 trait UidGenerate{
