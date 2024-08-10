@@ -23,6 +23,15 @@ trait Str
         return $randomString;
     }
 
+    /**
+     * Generar correo electrónico a raíz de una palabra y el dominio
+     * @param word => Longitud de la cadena
+     */
+    public function generateEmailDomain($word)
+    {
+        return $word . "@" . $_SERVER['SERVER_NAME'];
+    }
+
     public function reemplazarTildes($cadena) {
         $originales = array('á', 'é', 'í', 'ó', 'ú', 'Á', 'É', 'Í', 'Ó', 'Ú', 'ñ', 'Ñ');
         $reemplazos = array('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U', 'n', 'N');
