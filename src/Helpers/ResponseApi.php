@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helpers;
+namespace Jeanp\Jelper\Helpers;
 
 class ResponseApi {
 

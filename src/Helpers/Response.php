@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helpers;
+namespace Jeanp\Jelper\Helpers;
 
 use Illuminate\Support\Facades\Session;
 use Yajra\DataTables\DataTables;
