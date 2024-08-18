@@ -1,9 +1,34 @@
 <?php
 
 namespace Jeanp\Jelper\Traits;
-
+use Illuminate\Support\Facades\Storage;
 trait File
 {
+    /**
+     * Función para obtener la URL pública de un archivo
+     * @param path => path original del archivo
+     * @param default => en caso de imagen, definir una por defecto
+     */
+    public function getFile($path, $default = '', $disk = 'public'){
+
+        if (!$path) {
+            if ($default) {
+                return $default;
+            }
+
+            return '';
+        }
+
+        if (Storage::disk($disk)->exists($path)) {
+            return asset(Storage::url($path));
+        }
+
+        if ($default) {
+            return $default;
+        }
+
+        return '';
+    }
 
     public function getFileSize($file_path)
     {
