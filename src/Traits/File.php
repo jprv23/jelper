@@ -9,7 +9,7 @@ trait File
      * @param path => path original del archivo
      * @param default => en caso de imagen, definir una por defecto
      */
-    public function getFile($path, $default = '', $disk = 'public'){
+    public function getUrlFile($path, $default = '', $disk = 'public'){
 
         if (!$path) {
             if ($default) {
