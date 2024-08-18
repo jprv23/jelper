@@ -15,7 +15,6 @@ trait File
             if ($default) {
                 return $default;
             }
-
             return '';
         }
 
