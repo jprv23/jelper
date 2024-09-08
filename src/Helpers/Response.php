@@ -64,7 +64,7 @@ class Response {
             return response()->json(['isSuccess' => false, 'message' => $message]);
         }
 
-        Session::flash('error', 'Message: ' . $message);
+        Session::flash('error', $message);
 
         return back()->withInput(request()->all());
     }
