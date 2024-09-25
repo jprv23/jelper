@@ -1,7 +1,9 @@
 <?php
 
 namespace Jeanp\Jelper\Traits;
+
 use Illuminate\Support\Facades\Storage;
+
 trait File
 {
     /**
@@ -9,7 +11,8 @@ trait File
      * @param path => path original del archivo
      * @param default => en caso de imagen, definir una por defecto
      */
-    public function getUrlFile($path, $default = '', $disk = 'public'){
+    public function getUrlFile($path, $default = '', $disk = 'public')
+    {
 
         if (!$path) {
             if ($default) {
@@ -28,12 +31,26 @@ trait File
 
         return '';
     }
-
-    public function getFileSize($file_path)
+    
+    function getFileSize($pathname, $bytes = false)
     {
-        $size = filesize(storage_path('app/public') . DIRECTORY_SEPARATOR  . $file_path);
+        if (!$pathname) {
+            return '';
+        }
 
-        return number_format($size / 1048576, 2);
+        $size = filesize($pathname);
+
+        if ($bytes) {
+            return $size;
+        }
+
+        $mb = $size / 1048576;
+
+        if ($mb > 0.1) {
+            return number_format($mb, 1) . " MB";
+        }
+
+        return number_format($mb * 1024) . " KB";
     }
 
     public function saveFile($file, $directory, $disk = 'public', $filename = null)
