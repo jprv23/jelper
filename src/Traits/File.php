@@ -60,9 +60,28 @@ trait File
         }
 
         if (!$filename) {
-            $filename = time() . "_" . preg_replace('/\s+/', '_', strtolower($file->getClientOriginalName()));
+            $filename = time() . "_" . $this->getFilenameSanitaze($file->getClientOriginalName());
+        }else{
+            $filename = $this->getFilenameSanitaze($filename);
         }
 
         return $file->storeAs($directory, $filename, $disk);
+    }
+
+    public function getFilenameSanitaze($nombre) {
+        // Reemplazar caracteres con acentos o especiales por sus equivalentes sin acento
+        $nombre = iconv('UTF-8', 'ASCII//TRANSLIT', $nombre);
+    
+        // Eliminar caracteres no permitidos: cualquier cosa que no sea letra, número, guión o guion bajo
+        $nombre = preg_replace('/[^a-zA-Z0-9-_.]/', '', $nombre);
+    
+        // Convertir a minúsculas para mayor consistencia
+        $nombre = strtolower($nombre);
+    
+        // Limitar la longitud del nombre (opcional)
+        $nombre = substr($nombre, 0, 200);
+    
+        // Retornar el nombre limpio
+        return $nombre;
     }
 }
