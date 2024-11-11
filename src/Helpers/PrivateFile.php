@@ -17,7 +17,7 @@ class PrivateFile
 
         if ($public_token) {
             Route::prefix('privatetoken')->name('privatetoken.')->group(function () use ($public_token) {
-                Route::get("stream-{$public_token}/url?}", [PrivateFile::class, 'stream'])->where(['url' => '.*'])->name('stream');
+                Route::get("stream-{$public_token}/{url?}", [PrivateFile::class, 'stream'])->where(['url' => '.*'])->name('stream');
             });
         }
     }
