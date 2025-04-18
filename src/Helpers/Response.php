@@ -140,4 +140,17 @@ class Response
 
         return DataTables::of($data)->addIndexColumn();
     }
+
+    public function redirect($route){
+        return redirect($route);
+    }
+
+    public function route($route, $params = null){
+
+        if($params){
+            return redirect()->route($route, $params);
+        }
+
+        return redirect()->route($route);
+    }
 }
