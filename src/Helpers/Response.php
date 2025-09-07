@@ -26,9 +26,7 @@ class Response
      */
     public function success($message = '', $data = [], $redirect = null)
     {
-
-
-        if (request()->ajax()) {
+        if (request()->ajax() || request()->expectsJson()) {
             return response()->json(['isSuccess' => true, 'message' => $message, 'data' => $data, 'redirect' => $redirect]);
         }
 
@@ -50,9 +48,7 @@ class Response
      */
     public function error($message, $data = [], $redirect = null)
     {
-
-
-        if (request()->ajax()) {
+        if (request()->ajax() || request()->expectsJson()) {
             return response()->json(['isSuccess' => false, 'message' => $message, 'data' => $data, 'redirect' => $redirect]);
         }
 
@@ -79,7 +75,7 @@ class Response
             $message = $e->getMessage() . ' | Line: ' . $e->getLine() . ' | File: ' . $e->getFile();
         }
 
-        if (request()->ajax()) {
+        if (request()->ajax() || request()->expectsJson()) {
             return response()->json(['isSuccess' => false, 'message' => $message]);
         }
 
