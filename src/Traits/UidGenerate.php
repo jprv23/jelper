@@ -8,6 +8,7 @@ trait UidGenerate{
     public static function uid($prefix = '', $length = 9, $where = null){
         $options = [
             'table' => (new static)->getTable(),
+            'connection' => (new static)->getConnectionName(),
             'field' => 'uid',
             'length' => $length,
             'prefix' => $prefix,
@@ -23,6 +24,7 @@ trait UidGenerate{
     public static function sku($prefix = '', $length = 9, $where = null){
         $options = [
             'table' => (new static)->getTable(),
+            'connection' => (new static)->getConnectionName(),
             'field' => 'sku',
             'length' => $length,
             'prefix' => $prefix,
@@ -40,7 +42,7 @@ trait UidGenerate{
         $field = $options['field'];
         $length = $options['length'] ?? 8;
         $prefix = $options['prefix'] ?? '';
-        $query = DB::table($options['table'])->select($field);
+        $query = DB::connection($options['connection'])->table($options['table'])->select($field);
 
         $query->where($field, 'like', $prefix . '%');
 
