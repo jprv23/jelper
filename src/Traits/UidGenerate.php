@@ -42,6 +42,8 @@ trait UidGenerate{
         $prefix = $options['prefix'] ?? '';
         $query = DB::table($options['table'])->select($field);
 
+        $query->where($field, 'like', $prefix . '%');
+
         if(isset($options['where'])){
 
             foreach($options['where'] as $key => $value){
