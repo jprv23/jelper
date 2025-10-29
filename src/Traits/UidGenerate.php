@@ -57,7 +57,7 @@ trait UidGenerate{
         $result = $query->orderByDesc('id')->first();
 
         if($result){
-            $num = (int) filter_var($result->$field, FILTER_SANITIZE_NUMBER_INT) + 1;
+            $num = (int) preg_replace('/[^0-9]/', '', $result->$field) + 1;
         }
 
 
