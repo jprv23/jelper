@@ -3,9 +3,12 @@
 namespace Jeanp\Jelper\Traits;
 
 use Illuminate\Support\Facades\DB;
-trait UidGenerate{
 
-    public static function uid($prefix = '', $length = 9, $where = null){
+trait UidGenerate
+{
+
+    public static function uid($prefix = '', $length = 9, $where = null)
+    {
         $options = [
             'table' => (new static)->getTable(),
             'connection' => (new static)->getConnectionName(),
@@ -14,14 +17,15 @@ trait UidGenerate{
             'prefix' => $prefix,
         ];
 
-        if($where){
+        if ($where) {
             $options['where'] = $where;
         }
 
         return self::__generator($options);
     }
 
-    public static function sku($prefix = '', $length = 9, $where = null){
+    public static function sku($prefix = '', $length = 9, $where = null)
+    {
         $options = [
             'table' => (new static)->getTable(),
             'connection' => (new static)->getConnectionName(),
@@ -30,38 +34,43 @@ trait UidGenerate{
             'prefix' => $prefix,
         ];
 
-        if($where){
+        if ($where) {
             $options['where'] = $where;
         }
 
         return self::__generator($options);
     }
 
-    protected static function __generator($options){
-
+    protected static function __generator($options)
+    {
         $field = $options['field'];
         $length = $options['length'] ?? 8;
         $prefix = $options['prefix'] ?? '';
         $query = DB::connection($options['connection'])->table($options['table'])->select($field);
 
+        // Filtrar por prefijo
         $query->where($field, 'like', $prefix . '%');
 
-        if(isset($options['where'])){
-
-            foreach($options['where'] as $key => $value){
+        // Filtros extra opcionales
+        if (isset($options['where'])) {
+            foreach ($options['where'] as $key => $value) {
                 $query->where($key, $value);
             }
         }
 
-        $num = 1;
+        // Obtener el último correlativo de esa serie
         $result = $query->orderByDesc('id')->first();
 
-        if($result){
-            $num = (int) preg_replace('/[^0-9]/', '', $result->$field) + 1;
+        $num = 1;
+        if ($result && !empty($result->$field)) {
+            // Extrae la parte numérica final después del prefijo
+            if (preg_match('/^' . preg_quote($prefix, '/') . '(\d+)$/', $result->$field, $matches)) {
+                $num = (int) $matches[1] + 1;
+            }
         }
 
-
-        return $prefix . str_pad($num, $length - strlen($prefix), "0", STR_PAD_LEFT);
+        // Genera el nuevo código
+        $numericPart = str_pad($num, $length - strlen($prefix), '0', STR_PAD_LEFT);
+        return $prefix . $numericPart;
     }
-
 }
