@@ -3,7 +3,7 @@
 namespace Jeanp\Jelper\Helpers;
 
 use Illuminate\Support\Facades\Session;
-use Yajra\DataTables\DataTables;
+use Jeanp\Jelper\Datatables\DataTables;
 
 class Response
 {
