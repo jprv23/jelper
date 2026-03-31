@@ -7,8 +7,11 @@ use Illuminate\Support\Facades\DB;
 
 class CustomEloquentDataTable extends EloquentDataTable
 {
-    public function withRelationColumn(string $relationPath, string $alias, array|string $fields = ['name'])
+    public function withRelationColumn(string $relationPath, string|null $alias = null, array|string $fields = ['name'])
     {
+        if(!$alias){
+            $alias ="{$relationPath}_name";
+        }
         // Normalizar fields
         if (is_string($fields)) {
             $fields = [$fields];
