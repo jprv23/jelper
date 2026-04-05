@@ -53,9 +53,9 @@ class CustomEloquentDataTable extends EloquentDataTable
 
         $fieldExpression = count($fields) > 1
             ? "CONCAT(" . collect($fields)
-            ->map(fn($f) => "$finalAlias.$f")
-            ->join(", ' ', ") . ")"
-            : "$finalAlias.{$fields[0]}";
+                ->map(fn($f) => "COALESCE($finalAlias.$f, '')")
+                ->join(", ' ', ") . ")"
+            : "COALESCE($finalAlias.{$fields[0]}, '')";
 
         $subQuery = $fieldExpression;
 
