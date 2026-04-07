@@ -70,7 +70,10 @@ class LogHelper
         $description = "Se realizaron los siguientes cambios:\n";
         $exclude_field = ['updated_at','password'];
         $count_changes = 0;
+        $action = 'updated';
         foreach ($changes as $field => $newValue) {
+
+
             if (!in_array($field, $exclude_field)) {
                 $oldValue = $model->getOriginal($field);
                 $description .= " - Campo: $field\n";
@@ -78,11 +81,15 @@ class LogHelper
                 $description .= "   Nuevo valor: " . (is_null($newValue) ? 'N/A' : $newValue) . "\n";
                 $count_changes++;
             }
+
+            if($field == 'status' && ($oldValue == 1 && $newValue == 0)){
+                $action = 'deleted';
+            }
         }
         if ($count_changes > 0) {
             DB::table($this->table)->insert([
                 'model_type' => get_class($model), // Nombre del tipo de modelo
-                'action' => 'updated',
+                'action' => $action,
                 'model_id' => $model->id,
                 'description' => $description,
                 'user_id' => auth('web')->id(),
