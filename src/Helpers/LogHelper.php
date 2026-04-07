@@ -3,7 +3,7 @@
 namespace Jeanp\Jelper\Helpers;
 
 use App\Models\Log;
-use App\Observers\GeneralObserver;
+use Jeanp\Jelper\Observers\GeneralObserver;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
