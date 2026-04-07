@@ -50,7 +50,7 @@ class LogHelper
 
         foreach ($fields as $field => $value) {
             if (!in_array($field, $exclude_field)) {
-                $description .= " - Campo: $field\n";
+                $description .= " <b>- Campo: $field</b>\n";
                 $description .= "   Valor: " . (is_null($value) ? 'N/A' : $value) . "\n";
             }
         }
@@ -81,9 +81,9 @@ class LogHelper
 
             if (!in_array($field, $exclude_field)) {
                 $oldValue = $model->getOriginal($field);
-                $description .= " - Campo: $field\n";
-                $description .= "   Valor anterior: " . (is_null($oldValue) ? 'N/A' : $oldValue) . "\n";
-                $description .= "   Nuevo valor: " . (is_null($newValue) ? 'N/A' : $newValue) . "\n";
+                $description .= " <b>- Campo: $field</b>\n";
+                $description .= "   <span style='color:red'>Valor anterior:</span> " . (is_null($oldValue) ? 'N/A' : $oldValue) . "\n";
+                $description .= "   <span style='color:green'>Nuevo valor:</span> " . (is_null($newValue) ? 'N/A' : $newValue) . "\n";
                 $count_changes++;
             }
 
