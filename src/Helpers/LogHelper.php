@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\File;
 class LogHelper
 {
     protected $table = 'logs';
+    protected $connection = 'mysql';
+
+    public function __construct()
+    {
+        $this->connection = app()->bound('observer.log_connection') ? app('observer.log_connection') : 'mysql';
+    }
 
     public static function init($except = [])
     {
@@ -49,7 +55,7 @@ class LogHelper
             }
         }
 
-        DB::table($this->table)->insert([
+        DB::connection($this->connection)->table($this->table)->insert([
             'model_type' => get_class($model),
             'action' => 'created',
             'model_id' => $model->id,
@@ -57,7 +63,7 @@ class LogHelper
             'user_id' => auth('web')->id(),
             'created_at' => now(),
             'updated_at' => now(),
-
+            ...$data,
         ]);
     }
 
@@ -86,7 +92,7 @@ class LogHelper
             }
         }
         if ($count_changes > 0) {
-            DB::table($this->table)->insert([
+            DB::connection($this->connection)->table($this->table)->insert([
                 'model_type' => get_class($model), // Nombre del tipo de modelo
                 'action' => $action,
                 'model_id' => $model->id,
