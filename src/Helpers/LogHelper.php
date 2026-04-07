@@ -73,7 +73,6 @@ class LogHelper
         $action = 'updated';
         foreach ($changes as $field => $newValue) {
 
-
             if (!in_array($field, $exclude_field)) {
                 $oldValue = $model->getOriginal($field);
                 $description .= " - Campo: $field\n";
