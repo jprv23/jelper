@@ -36,7 +36,7 @@ class LogHelper
     /**
      * Handle the "created" event.
      */
-    public function created($model)
+    public function created($model, $data = [])
     {
         $description = "Se ha creado un nuevo registro:\n";
         $fields = $model->getAttributes();
@@ -57,13 +57,14 @@ class LogHelper
             'user_id' => auth('web')->id(),
             'created_at' => now(),
             'updated_at' => now(),
+
         ]);
     }
 
     /**
      * Handle the "updated" event.
      */
-    public function updated($model)
+    public function updated($model, $data = [])
     {
         $changes = $model->getChanges();
         $description = "Se realizaron los siguientes cambios:\n";
@@ -87,6 +88,7 @@ class LogHelper
                 'user_id' => auth('web')->id(),
                 'created_at' => now(),
                 'updated_at' => now(),
+                ...$data,
             ]);
         }
     }

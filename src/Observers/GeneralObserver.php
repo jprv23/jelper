@@ -6,13 +6,20 @@ use Jeanp\Jelper\Helpers\LogHelper;
 
 class GeneralObserver
 {
-    /**
-     * Handle the Model "created" event.
-     */
+
+    protected $data = [];
+
+    public function __construct()
+    {
+        $this->data = app()->bound('observer.data') ? app('observer.data') : [];
+    }
+
     public function created($user): void
     {
+        $data_created = $this->data;
+
         $log_h=new LogHelper();
-        $log_h->created($user);
+        $log_h->created($user, $data_created);
     }
 
     /**
@@ -20,8 +27,10 @@ class GeneralObserver
      */
     public function updated($user): void
     {
+        $data_updated = $this->data;
+
         $log_h=new LogHelper();
-        $log_h->updated($user);
+        $log_h->updated($user, $data_updated);
     }
 
     /**
