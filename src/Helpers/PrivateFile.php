@@ -33,6 +33,10 @@ class PrivateFile
             return abort('403', "El archivo que buscas no existe en el servidor");
         }
 
+        if (request()->boolean('download')) {
+            return response()->download($filePath);
+        }
+
         return response()->file($filePath);
     }
 }

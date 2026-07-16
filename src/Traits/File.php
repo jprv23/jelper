@@ -31,7 +31,7 @@ trait File
 
         return '';
     }
-    
+
     function getFileSize($pathname, $bytes = false)
     {
         if (!$pathname) {
@@ -71,17 +71,54 @@ trait File
     public function getFilenameSanitaze($nombre) {
         // Reemplazar caracteres con acentos o especiales por sus equivalentes sin acento
         $nombre = iconv('UTF-8', 'ASCII//TRANSLIT', $nombre);
-    
+
         // Eliminar caracteres no permitidos: cualquier cosa que no sea letra, número, guión o guion bajo
         $nombre = preg_replace('/[^a-zA-Z0-9-_.]/', '', $nombre);
-    
+
         // Convertir a minúsculas para mayor consistencia
         $nombre = strtolower($nombre);
-    
+
         // Limitar la longitud del nombre (opcional)
         $nombre = substr($nombre, 0, 200);
-    
+
         // Retornar el nombre limpio
         return $nombre;
+    }
+
+    public function getFilename($path)
+    {
+        $temp = explode('/', $path);
+
+        return end($temp);
+    }
+
+    function getFileExtension($path)
+    {
+        $filename = $this->getFilename($path);
+
+        $temp = explode('.', $filename);
+        return end($temp);
+    }
+
+
+    function geFileWeight($path, $bytes = false)
+    {
+        if (!$path) {
+            return '';
+        }
+
+        $size = filesize($path);
+
+        if ($bytes) {
+            return $size;
+        }
+
+        $mb = $size / 1048576;
+
+        if ($mb > 0.1) {
+            return number_format($mb, 1) . " MB";
+        }
+
+        return number_format($mb * 1024) . " KB";
     }
 }
